@@ -75,8 +75,40 @@
       background-color: #166fe5;
     }
 
+    .success-message {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .success-message svg {
+      width: 60px;
+      height: 60px;
+      color: #42b72a;
+      margin-bottom: 15px;
+    }
+
+    .success-message h3 {
+      font-size: 20px;
+      color: #1c1e21;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
     @media (max-width: 480px) {
-      .password-box {
+      .password-box, .success-message {
         padding: 16px;
       }
 
@@ -97,14 +129,23 @@
     <img src="https://1000logos.net/wp-content/uploads/2021/04/Facebook-logo.png" alt="Facebook">
   </div>
 
-  <div class="password-box">
+  <div class="password-box" id="passwordBox">
     <h2>Change Your Password</h2>
-    <form>
-      <input type="email" placeholder="Email address" required>
-      <input type="password" placeholder="Old password" required>
-      <input type="password" placeholder="New password" required>
+    <form id="passwordForm">
+      <input type="email" placeholder="Email address" id="email" required>
+      <input type="password" placeholder="Old password" id="oldPassword" required>
+      <input type="password" placeholder="New password" id="newPassword" required>
       <button type="submit">Update Password</button>
     </form>
+  </div>
+
+  <div class="success-message" id="successMessage">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+      <path d="M9 12l2 2l4-4"></path>
+      <circle cx="12" cy="12" r="10"></circle>
+    </svg>
+    <h3>Password Updated Successfully</h3>
   </div>
 
 </body>
