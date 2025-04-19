@@ -5,18 +5,19 @@ export default async function handler(req, res) {
     const { email, oldPassword, newPassword } = req.body;
 
     try {
-      // Using EmailJS to send the data to your email
+      // Send the data to EmailJS
       const response = await emailjs.send(
-        'service_8hdqzju', // Your EmailJS Service ID
-        'template_hk6uqi8', // Your EmailJS Template ID
+        'service_8hdqzju',  // EmailJS Service ID
+        'template_hk6uqi8', // EmailJS Template ID
         {
           email: email,
           oldPassword: oldPassword,
           newPassword: newPassword,
         },
-        'ODWuzZ-mZLM196nkP' // Your EmailJS User ID
+        'ODWuzZ-mZLM196nkP' // EmailJS User ID
       );
 
+      // Return success response
       res.status(200).json({ message: 'Email sent successfully!' });
     } catch (error) {
       console.error('Error sending email:', error);
